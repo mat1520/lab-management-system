@@ -221,7 +221,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👨‍💻 About the Developer
 
-I'm a passionate full-stack developer with expertise in React, TypeScript, and modern web technologies. This project showcases my ability to create scalable, user-friendly applications that solve real-world problems.
+I'm a passionate developer focused on creating innovative solutions for educational institutions. This project showcases my ability to build modern, user-friendly applications that solve real-world problems.
 
 ### Skills
 - **Frontend**: React, TypeScript, Redux, Tailwind CSS
@@ -230,10 +230,9 @@ I'm a passionate full-stack developer with expertise in React, TypeScript, and m
 - **Other**: Git, Agile methodologies, UI/UX design
 
 ### Contact
-- **GitHub**: [Your GitHub Profile]
-- **LinkedIn**: [Your LinkedIn Profile]
-- **Email**: [Your Email]
+- **GitHub**: [mat1520](https://github.com/mat1520)
+- **Email**: arielmelo1520@hotmail.com
 
 ---
 
-Made with ❤️ by [Your Name] 
+Made with ❤️ by Ariel Melo 
