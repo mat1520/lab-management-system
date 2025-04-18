@@ -8,13 +8,6 @@ interface LoginCredentials {
   password: string;
 }
 
-interface LoginResponse {
-  user: {
-    email: string;
-    name: string;
-  };
-}
-
 const Login: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -36,11 +29,7 @@ const Login: React.FC = () => {
     setError('');
     
     try {
-      // Simulación de login - reemplazar con llamada real a API
-      const response: LoginResponse = {
-        user: { email: formData.email, name: 'Usuario' }
-      };
-      await dispatch(login(response));
+      await dispatch(login(formData)).unwrap();
       navigate('/');
     } catch (err) {
       setError('Error al iniciar sesión. Por favor, intente nuevamente.');
