@@ -1,146 +1,156 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 
 const Home: React.FC = () => {
-  return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-indigo-50 to-white">
-      {/* Círculos decorativos con animación */}
-      <div className="accent-circle top-[-150px] right-[-150px]" />
-      <div className="accent-circle bottom-[-150px] left-[-150px]" />
-      <div className="accent-circle top-[20%] left-[30%]" style={{ animationDelay: '1s' }} />
-      <div className="accent-circle bottom-[30%] right-[20%]" style={{ animationDelay: '2s' }} />
+  const { user } = useSelector((state: RootState) => state.auth);
 
-      {/* Contenido principal */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Texto principal con animaciones */}
-          <div className="space-y-8">
-            <div className="space-y-4">
-              <span className="inline-block px-4 py-1 rounded-full bg-indigo-100 text-indigo-700 text-sm font-medium">
-                ✨ Sistema de Última Generación
-              </span>
-              <h1 className="text-5xl md:text-6xl font-bold leading-tight">
-                <span className="text-gradient">Lab Management</span>
-                <br />
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-gray-700 to-gray-900">
-                  Sistema Inteligente
-                </span>
-              </h1>
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-sky-50 dark:from-gray-900 dark:to-slate-900">
+      {/* Hero Section */}
+      <div className="relative overflow-hidden">
+        {/* Decorative circles */}
+        <div className="accent-circle top-[-10%] left-[-5%]"></div>
+        <div className="accent-circle bottom-[-10%] right-[-5%]"></div>
+
+        {/* Navigation */}
+        <nav className="relative z-10 backdrop-blur-md bg-white/30 dark:bg-gray-800/30">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between h-16">
+              <div className="flex-shrink-0">
+                <h1 className="text-2xl font-bold text-gradient">Lab Management</h1>
+              </div>
+              <div className="flex space-x-4">
+                {!user ? (
+                  <>
+                    <Link to="/login" className="button-gradient px-6 py-2">
+                      Iniciar Sesión
+                    </Link>
+                    <Link to="/register" className="button-gradient px-6 py-2">
+                      Registrarse
+                    </Link>
+                  </>
+                ) : (
+                  <Link to="/dashboard" className="button-gradient px-6 py-2">
+                    Dashboard
+                  </Link>
+                )}
+              </div>
             </div>
-            <p className="text-lg text-gray-600 max-w-2xl animate-fade-in">
+          </div>
+        </nav>
+
+        {/* Hero content */}
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24">
+          <div className="text-center">
+            <h1 className="text-5xl md:text-6xl font-bold mb-8 text-gradient">
+              Sistema Inteligente de Gestión de Laboratorios
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 max-w-3xl mx-auto">
               Revoluciona la gestión de tu laboratorio con nuestra plataforma impulsada por IA.
               Optimiza recursos, mejora la eficiencia y toma decisiones basadas en datos en tiempo real.
             </p>
-            <div className="flex gap-4">
-              <Link
-                to="/register"
-                className="button-gradient text-white px-8 py-3 rounded-full font-medium text-lg"
-              >
+            <div className="flex justify-center space-x-4">
+              <Link to="/register" className="button-gradient px-8 py-4 text-lg">
                 Comenzar Ahora
               </Link>
-              <Link
-                to="/login"
-                className="px-8 py-3 rounded-full font-medium text-lg border-2 border-primary-600 text-primary-600 hover:bg-primary-50 transition-colors"
-              >
-                Iniciar Sesión
-              </Link>
+              <a href="#features" className="px-8 py-4 text-lg text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors">
+                Saber Más
+              </a>
             </div>
-            
-            {/* Estadísticas */}
-            <div className="grid grid-cols-3 gap-6 mt-12">
-              {[
-                { number: '99%', label: 'Satisfacción' },
-                { number: '24/7', label: 'Soporte' },
-                { number: '+1000', label: 'Usuarios' },
-              ].map((stat, index) => (
-                <div key={index} className="text-center">
-                  <div className="text-2xl font-bold text-primary-600">{stat.number}</div>
-                  <div className="text-sm text-gray-500">{stat.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Panel de características con efecto glass */}
-          <div className="animate-float">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-3xl blur-xl opacity-30"></div>
-              <div className="relative glass-effect rounded-3xl p-8">
-                <div className="grid grid-cols-2 gap-6">
-                  {[
-                    { title: 'IA Avanzada', icon: '🤖', desc: 'Predicción de mantenimiento' },
-                    { title: 'Tiempo Real', icon: '⚡', desc: 'Actualizaciones instantáneas' },
-                    { title: 'Analytics', icon: '📊', desc: 'Informes detallados' },
-                    { title: 'Seguridad', icon: '🔒', desc: 'Protección avanzada' },
-                  ].map((feature, index) => (
-                    <div
-                      key={index}
-                      className="p-4 rounded-xl bg-white/10 backdrop-blur-lg border border-white/20 card-hover"
-                    >
-                      <div className="text-3xl mb-2">{feature.icon}</div>
-                      <h3 className="font-semibold text-white mb-1">{feature.title}</h3>
-                      <p className="text-sm text-white/80">{feature.desc}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Características principales */}
-        <div className="mt-24 space-y-12">
-          <h2 className="text-3xl font-bold text-center mb-12">
-            <span className="text-gradient">Características Destacadas</span>
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: '🎯',
-                title: 'Gestión Inteligente',
-                description: 'IA que aprende de tus patrones de uso y optimiza automáticamente los recursos.',
-              },
-              {
-                icon: '⚡',
-                title: 'Tiempo Real',
-                description: 'Monitoreo en vivo con alertas instantáneas y dashboards actualizados en tiempo real.',
-              },
-              {
-                icon: '📱',
-                title: 'Multiplataforma',
-                description: 'Accede desde cualquier dispositivo con nuestra interfaz adaptativa y moderna.',
-              },
-            ].map((feature, index) => (
-              <div
-                key={index}
-                className="p-6 rounded-2xl bg-white shadow-xl card-hover"
-              >
-                <div className="text-4xl mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Banner de llamada a la acción */}
-        <div className="mt-24 text-center">
-          <div className="glass-effect p-12 rounded-3xl relative overflow-hidden">
-            <h2 className="text-3xl font-bold mb-4">
-              ¿Listo para revolucionar tu laboratorio?
-            </h2>
-            <p className="text-lg text-gray-600 mb-8">
-              Únete a los laboratorios que ya están transformando su gestión con nuestra plataforma
-            </p>
-            <Link
-              to="/register"
-              className="button-gradient text-white px-12 py-4 rounded-full font-medium text-lg inline-block"
-            >
-              Comenzar Ahora
-            </Link>
           </div>
         </div>
       </div>
+
+      {/* Features Section */}
+      <section id="features" className="py-20 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gradient mb-4">
+              Características Destacadas
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300">
+              Descubre cómo podemos transformar tu laboratorio
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Feature 1 */}
+            <div className="glass-effect p-8 rounded-2xl">
+              <div className="text-4xl mb-4">🤖</div>
+              <h3 className="text-xl font-semibold mb-4 text-gradient">IA Avanzada</h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                Predicción de mantenimiento y optimización automática de recursos mediante IA.
+              </p>
+            </div>
+
+            {/* Feature 2 */}
+            <div className="glass-effect p-8 rounded-2xl">
+              <div className="text-4xl mb-4">⚡</div>
+              <h3 className="text-xl font-semibold mb-4 text-gradient">Tiempo Real</h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                Monitoreo en vivo con alertas instantáneas y dashboards actualizados.
+              </p>
+            </div>
+
+            {/* Feature 3 */}
+            <div className="glass-effect p-8 rounded-2xl">
+              <div className="text-4xl mb-4">📊</div>
+              <h3 className="text-xl font-semibold mb-4 text-gradient">Analytics</h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                Informes detallados y análisis profundo del uso de recursos.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-20 relative bg-gradient-to-b from-transparent to-indigo-50/50 dark:to-slate-800/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div className="glass-effect p-8 rounded-2xl">
+              <div className="text-4xl font-bold text-gradient mb-2">99%</div>
+              <div className="text-gray-600 dark:text-gray-300">Satisfacción</div>
+            </div>
+            <div className="glass-effect p-8 rounded-2xl">
+              <div className="text-4xl font-bold text-gradient mb-2">24/7</div>
+              <div className="text-gray-600 dark:text-gray-300">Soporte</div>
+            </div>
+            <div className="glass-effect p-8 rounded-2xl">
+              <div className="text-4xl font-bold text-gradient mb-2">+1000</div>
+              <div className="text-gray-600 dark:text-gray-300">Usuarios</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="glass-effect p-12 rounded-2xl">
+            <h2 className="text-4xl font-bold text-gradient mb-8">
+              ¿Listo para revolucionar tu laboratorio?
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
+              Únete a los más de 1000 usuarios que ya han transformado la gestión de sus laboratorios.
+            </p>
+            <Link to="/register" className="button-gradient px-8 py-4 text-lg inline-block">
+              Comenzar Gratis
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-12 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center text-gray-600 dark:text-gray-400">
+            <p>© 2024 Lab Management System. Todos los derechos reservados.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
