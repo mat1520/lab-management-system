@@ -8,8 +8,8 @@
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "build",
-        "installCommand": "npm install --legacy-peer-deps"
+        "buildCommand": "npm run build",
+        "outputDirectory": "build"
       }
     }
   ],
@@ -25,6 +25,10 @@
     {
       "src": "/manifest.json",
       "dest": "/manifest.json"
+    },
+    {
+      "src": "/logo(.*)",
+      "dest": "/logo$1"
     },
     {
       "src": "/(.*)",
