@@ -1,69 +1,90 @@
-# Sistema de Gestión de Laboratorios
+# Lab Management System
 
-Sistema web para la gestión y reserva de laboratorios desarrollado con React, TypeScript y Redux.
+A modern web application for managing laboratory resources and experiments, built with React, TypeScript, and Redux.
 
-## Tecnologías Utilizadas
+## 🚀 Features
+
+- User Authentication (Login/Register)
+- Laboratory Resource Management
+- Real-time Status Updates
+- Responsive Design with Glass Effect UI
+- TypeScript Support
+- State Management with Redux Toolkit
+- API Integration with React Query
+
+## 🛠️ Technologies
 
 - React 18
 - TypeScript 4.9.5
 - Redux Toolkit
-- React Router DOM
-- TailwindCSS
+- React Router v6
 - React Query
-- Jest (para testing)
+- TailwindCSS
+- ESLint & Prettier
 
-## Características
+## 📦 Installation
 
-- Autenticación de usuarios
-- Gestión de laboratorios
-- Sistema de reservas
-- Interfaz moderna y responsive
-- Modo claro/oscuro
-- Efectos visuales modernos
-
-## Instalación
-
-1. Clonar el repositorio:
+1. Clone the repository:
 ```bash
 git clone https://github.com/mat1520/lab-management-system.git
+cd lab-management-system
 ```
 
-2. Instalar dependencias:
+2. Install dependencies:
 ```bash
 cd frontend
 npm install --legacy-peer-deps
 ```
 
-3. Iniciar el servidor de desarrollo:
+3. Start the development server:
 ```bash
 npm start
 ```
 
-## Estructura del Proyecto
+## 🔧 Configuration
+
+The project uses the following configuration files:
+- `tsconfig.json` for TypeScript settings
+- `.eslintrc.json` for code linting
+- `tailwind.config.js` for styling utilities
+
+## 🚀 Deployment
+
+This project is configured for deployment on Vercel. The build command is set to:
+```bash
+npm run build
+```
+
+## 🌐 Environment Variables
+
+Create a `.env` file in the frontend directory with:
+```
+REACT_APP_API_URL=your_api_url_here
+```
+
+## 📝 Project Structure
 
 ```
 frontend/
-  ├── src/
-  │   ├── components/     # Componentes reutilizables
-  │   ├── pages/         # Páginas de la aplicación
-  │   ├── store/         # Configuración de Redux y slices
-  │   ├── styles/        # Estilos globales y utilidades
-  │   └── types/         # Definiciones de tipos TypeScript
-  ├── public/           # Archivos estáticos
-  └── package.json      # Dependencias y scripts
+├── src/
+│   ├── components/     # Reusable components
+│   ├── pages/         # Page components
+│   ├── store/         # Redux store configuration
+│   ├── styles/        # Global styles and utilities
+│   ├── types/         # TypeScript type definitions
+│   └── utils/         # Helper functions
+├── public/           # Static files
+└── package.json      # Project dependencies
 ```
 
-## Scripts Disponibles
+## 🤝 Contributing
 
-- `npm start`: Inicia el servidor de desarrollo
-- `npm build`: Construye la aplicación para producción
-- `npm test`: Ejecuta los tests
-- `npm run eject`: Expone la configuración de Create React App
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## Despliegue
+## 📄 License
 
-El proyecto está configurado para ser desplegado en Vercel. La rama principal (`main`) se despliega automáticamente cuando se realizan cambios.
-
-## Licencia
-
-MIT 
+This project is licensed under the MIT License - see the LICENSE file for details. 
