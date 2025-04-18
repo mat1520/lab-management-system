@@ -42,23 +42,23 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center relative overflow-hidden p-6 bg-gradient-to-br from-indigo-50 to-sky-50 dark:from-gray-900 dark:to-slate-900">
+    <div className="min-h-screen flex items-center justify-center relative overflow-hidden p-6 bg-gradient-to-br from-[#f8f9fd] to-[#edf2f7]">
       {/* Círculos decorativos */}
       <div className="accent-circle top-[-20%] left-[-10%]"></div>
       <div className="accent-circle bottom-[-20%] right-[-10%]"></div>
       
       <div className="glass-effect w-full max-w-md p-8 rounded-2xl relative z-10">
-        <div className="text-center mb-8 space-y-2">
-          <h1 className="text-4xl font-bold text-gradient">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             ¡Bienvenido!
           </h1>
-          <p className="text-gray-600 dark:text-gray-300">
+          <p className="text-text-secondary">
             Inicia sesión para continuar
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-1">
+          <div>
             <label htmlFor="email" className="form-label">
               Correo electrónico
             </label>
@@ -75,7 +75,7 @@ const Login: React.FC = () => {
             />
           </div>
 
-          <div className="space-y-1">
+          <div>
             <label htmlFor="password" className="form-label">
               Contraseña
             </label>
@@ -100,12 +100,12 @@ const Login: React.FC = () => {
 
           <button
             type="submit"
-            className="button-gradient w-full py-3 px-4"
+            className="button-gradient w-full py-3 px-4 text-white font-medium"
           >
             Iniciar Sesión
           </button>
 
-          <p className="text-center text-gray-600 dark:text-gray-400">
+          <p className="text-center text-text-secondary">
             ¿No tienes una cuenta?{' '}
             <Link to="/register" className="link-hover">
               Regístrate aquí
