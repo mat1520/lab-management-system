@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { AppDispatch } from '../index';
 
 interface User {
@@ -16,6 +16,22 @@ interface AuthState {
   error: string | null;
 }
 
+interface LoginCredentials {
+  email: string;
+  password: string;
+}
+
+interface RegisterData {
+  name: string;
+  email: string;
+  password: string;
+}
+
+interface AuthResponse {
+  user: User;
+  token: string;
+}
+
 const initialState: AuthState = {
   user: null,
   token: localStorage.getItem('token'),
@@ -24,40 +40,48 @@ const initialState: AuthState = {
   error: null,
 };
 
+export const register = createAsyncThunk(
+  'auth/register',
+  async (userData: RegisterData) => {
+    const response = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(userData),
+    });
+
+    if (!response.ok) {
+      throw new Error('Error en el registro');
+    }
+
+    const data: AuthResponse = await response.json();
+    localStorage.setItem('token', data.token);
+    return data;
+  }
+);
+
+export const login = createAsyncThunk(
+  'auth/login',
+  async (credentials: LoginCredentials) => {
+    const response = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(credentials),
+    });
+
+    if (!response.ok) {
+      throw new Error('Error en el inicio de sesión');
+    }
+
+    const data: AuthResponse = await response.json();
+    localStorage.setItem('token', data.token);
+    return data;
+  }
+);
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    loginStart: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
-    loginSuccess: (state, action: PayloadAction<{ user: User; token: string }>) => {
-      state.loading = false;
-      state.isAuthenticated = true;
-      state.user = action.payload.user;
-      state.token = action.payload.token;
-      localStorage.setItem('token', action.payload.token);
-    },
-    loginFailure: (state, action: PayloadAction<string>) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
-    registerStart: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
-    registerSuccess: (state, action: PayloadAction<{ user: User; token: string }>) => {
-      state.loading = false;
-      state.isAuthenticated = true;
-      state.user = action.payload.user;
-      state.token = action.payload.token;
-      localStorage.setItem('token', action.payload.token);
-    },
-    registerFailure: (state, action: PayloadAction<string>) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
     logout: (state) => {
       state.user = null;
       state.token = null;
@@ -68,59 +92,39 @@ const authSlice = createSlice({
       state.user = action.payload;
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(register.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isAuthenticated = true;
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Error en el registro';
+      })
+      .addCase(login.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isAuthenticated = true;
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Error en el inicio de sesión';
+      });
+  },
 });
 
-export const {
-  loginStart,
-  loginSuccess,
-  loginFailure,
-  registerStart,
-  registerSuccess,
-  registerFailure,
-  logout,
-  updateUser,
-} = authSlice.actions;
-
-export const register = (userData: { name: string; email: string; password: string }) => 
-  async (dispatch: AppDispatch) => {
-    try {
-      dispatch(registerStart());
-      const response = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userData),
-      });
-
-      if (!response.ok) {
-        throw new Error('Error en el registro');
-      }
-
-      const data = await response.json();
-      dispatch(registerSuccess(data));
-    } catch (error) {
-      dispatch(registerFailure(error instanceof Error ? error.message : 'Error en el registro'));
-    }
-  };
-
-export const login = (credentials: { email: string; password: string }) => 
-  async (dispatch: AppDispatch) => {
-    try {
-      dispatch(loginStart());
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(credentials),
-      });
-
-      if (!response.ok) {
-        throw new Error('Error en el inicio de sesión');
-      }
-
-      const data = await response.json();
-      dispatch(loginSuccess(data));
-    } catch (error) {
-      dispatch(loginFailure(error instanceof Error ? error.message : 'Error en el inicio de sesión'));
-    }
-  };
+export const { logout, updateUser } = authSlice.actions;
 
 export default authSlice.reducer; 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { register } from '../../store/slices/authSlice';
+import { useAppDispatch } from '../../hooks/redux';
 
 const Register: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -17,7 +17,7 @@ const Register: React.FC = () => {
     confirmPassword: '',
   });
   const [isLoading, setIsLoading] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const validateForm = () => {
@@ -80,12 +80,14 @@ const Register: React.FC = () => {
 
     setIsLoading(true);
     try {
-      await dispatch(register({
+      const action = await dispatch(register({
         name: formData.name,
         email: formData.email,
         password: formData.password,
       }));
-      navigate('/');
+      if (register.fulfilled.match(action)) {
+        navigate('/');
+      }
     } catch (error) {
       console.error('Error durante el registro:', error);
     } finally {
