@@ -34,46 +34,66 @@ interface AuthResponse {
 const initialState: AuthState = {
   user: null,
   token: localStorage.getItem('token'),
-  isAuthenticated: false,
+  isAuthenticated: !!localStorage.getItem('token'),
   loading: false,
   error: null,
 };
 
-export const register = createAsyncThunk(
-  'auth/register',
-  async (userData: RegisterData) => {
-    const response = await fetch('/api/auth/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(userData),
-    });
-
-    if (!response.ok) {
-      throw new Error('Error en el registro');
-    }
-
-    const data: AuthResponse = await response.json();
-    localStorage.setItem('token', data.token);
-    return data;
+// Simulación de API para desarrollo
+const mockLogin = async (credentials: LoginCredentials): Promise<AuthResponse> => {
+  // Simular delay de red
+  await new Promise(resolve => setTimeout(resolve, 500));
+  
+  if (credentials.email === 'admin@example.com' && credentials.password === 'admin123') {
+    return {
+      user: {
+        id: '1',
+        name: 'Administrador',
+        email: 'admin@example.com',
+        role: 'admin'
+      },
+      token: 'mock-jwt-token'
+    };
   }
-);
+  
+  throw new Error('Credenciales inválidas');
+};
 
 export const login = createAsyncThunk(
   'auth/login',
   async (credentials: LoginCredentials) => {
-    const response = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(credentials),
-    });
-
-    if (!response.ok) {
-      throw new Error('Error en el inicio de sesión');
+    try {
+      // En desarrollo usamos el mock, en producción usaríamos la API real
+      const data = await mockLogin(credentials);
+      localStorage.setItem('token', data.token);
+      return data;
+    } catch (error) {
+      localStorage.removeItem('token');
+      throw error;
     }
+  }
+);
 
-    const data: AuthResponse = await response.json();
-    localStorage.setItem('token', data.token);
-    return data;
+export const register = createAsyncThunk(
+  'auth/register',
+  async (userData: RegisterData) => {
+    try {
+      // Simulación de registro exitoso
+      const data: AuthResponse = {
+        user: {
+          id: Date.now().toString(),
+          name: userData.name,
+          email: userData.email,
+          role: 'user'
+        },
+        token: 'mock-jwt-token'
+      };
+      localStorage.setItem('token', data.token);
+      return data;
+    } catch (error) {
+      localStorage.removeItem('token');
+      throw error;
+    }
   }
 );
 
@@ -102,9 +122,11 @@ const authSlice = createSlice({
         state.isAuthenticated = true;
         state.user = action.payload.user;
         state.token = action.payload.token;
+        state.error = null;
       })
       .addCase(register.rejected, (state, action) => {
         state.loading = false;
+        state.isAuthenticated = false;
         state.error = action.error.message || 'Error en el registro';
       })
       .addCase(login.pending, (state) => {
@@ -116,14 +138,15 @@ const authSlice = createSlice({
         state.isAuthenticated = true;
         state.user = action.payload.user;
         state.token = action.payload.token;
+        state.error = null;
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
+        state.isAuthenticated = false;
         state.error = action.error.message || 'Error en el inicio de sesión';
       });
   },
 });
 
 export const { logout, updateUser } = authSlice.actions;
-
 export default authSlice.reducer; 

@@ -1,140 +1,159 @@
 .container {
-  min-height: 100vh;
-  background-color: #f8f9fa;
+  min-height: calc(100vh - 64px);
+  background-color: var(--background);
+  padding: 2rem;
 }
 
 .hero {
-  background: linear-gradient(135deg, #0056b3 0%, #007bff 100%);
+  text-align: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  border-radius: 1rem;
   color: white;
-  padding: 6rem 0;
-  text-align: center;
+  margin-bottom: 4rem;
 }
 
-.heroContent {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-.heroTitle {
-  font-size: 3.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.heroSubtitle {
-  font-size: 1.5rem;
-  margin-bottom: 2rem;
-  opacity: 0.9;
-}
-
-.features {
-  padding: 5rem 0;
-  background-color: white;
-}
-
-.featuresGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-.feature {
-  text-align: center;
-  padding: 2rem;
-  border-radius: 8px;
-  background-color: #f8f9fa;
-  transition: transform 0.3s ease;
-}
-
-.feature:hover {
-  transform: translateY(-5px);
-}
-
-.featureIcon {
-  font-size: 2.5rem;
-  color: #007bff;
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 700;
   margin-bottom: 1rem;
 }
 
-.stats {
-  background-color: #0056b3;
-  color: white;
-  padding: 4rem 0;
-}
-
-.statsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-  text-align: center;
-}
-
-.statNumber {
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
+.hero p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  margin-bottom: 2rem;
 }
 
 .cta {
-  padding: 5rem 0;
-  text-align: center;
-  background-color: white;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
 }
 
-.ctaContent {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-.button {
-  display: inline-block;
-  padding: 1rem 2rem;
-  font-size: 1.1rem;
+.primaryButton {
+  background: white;
+  color: var(--primary);
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
   font-weight: 600;
-  color: white;
-  background-color: #007bff;
-  border-radius: 5px;
+  transition: all 0.3s ease;
   text-decoration: none;
-  transition: background-color 0.3s ease;
-  margin: 0.5rem;
 }
 
-.button:hover {
-  background-color: #0056b3;
+.primaryButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.buttonOutline {
-  background-color: transparent;
-  border: 2px solid #007bff;
-  color: #007bff;
-}
-
-.buttonOutline:hover {
-  background-color: #007bff;
+.secondaryButton {
+  background: transparent;
   color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  border: 2px solid white;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.secondaryButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.features {
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.features h2 {
+  font-size: 2.5rem;
+  color: var(--text);
+  margin-bottom: 3rem;
+}
+
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.featureCard {
+  background: var(--surface);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.featureCard:hover {
+  transform: translateY(-4px);
+}
+
+.featureCard h3 {
+  color: var(--text);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.featureCard p {
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  padding: 4rem 2rem;
+  background: var(--surface);
+  border-radius: 1rem;
+  margin-top: 4rem;
+}
+
+.statCard {
+  text-align: center;
+}
+
+.statCard h3 {
+  font-size: 3rem;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.statCard p {
+  color: var(--text-light);
+  font-size: 1.1rem;
 }
 
 @media (max-width: 768px) {
-  .heroTitle {
-    font-size: 2.5rem;
+  .container {
+    padding: 1rem;
   }
-  
-  .heroSubtitle {
-    font-size: 1.2rem;
+
+  .hero {
+    padding: 2rem 1rem;
   }
-  
-  .featuresGrid {
-    grid-template-columns: 1fr;
+
+  .hero h1 {
+    font-size: 2rem;
   }
-  
-  .statsGrid {
-    grid-template-columns: 1fr;
+
+  .features {
+    padding: 2rem 1rem;
+  }
+
+  .features h2 {
+    font-size: 2rem;
+  }
+
+  .cta {
+    flex-direction: column;
+  }
+
+  .stats {
+    padding: 2rem 1rem;
   }
 } 

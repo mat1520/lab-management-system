@@ -1,102 +1,91 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../../store/slices/authSlice';
-import { AppDispatch } from '../../store';
-
-interface FormData {
-  email: string;
-  password: string;
-}
+import { RootState } from '../../store';
+import styles from './Auth.module.css';
 
 const Login: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState<FormData>({
+  const { isAuthenticated, loading, error } = useSelector((state: RootState) => state.auth);
+
+  const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
-  const [error, setError] = useState<string>('');
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard');
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev: FormData) => ({ ...prev, [name]: value }));
-    setError('');
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await dispatch(login(formData));
-      navigate('/dashboard');
+      await dispatch(login(formData)).unwrap();
     } catch (err) {
-      setError('Error al iniciar sesión. Por favor, intente nuevamente.');
+      console.error('Error al iniciar sesión:', err);
     }
   };
 
   return (
-    <div className="auth-container">
-      <div className="accent-circle -top-20 -left-20" />
-      <div className="accent-circle -bottom-20 -right-20" />
+    <div className={styles.authContainer}>
+      <div className={styles.circle1}></div>
+      <div className={styles.circle2}></div>
       
-      <div className="auth-form-container glass-effect">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold mb-2">Bienvenido de nuevo</h1>
-          <p className="text-gray-600">Inicia sesión para continuar</p>
-        </div>
-
-        {error && (
-          <div className="error-message mb-4">
-            {error}
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label htmlFor="email" className="form-label">
-              Correo electrónico
-            </label>
+      <div className={styles.glassContainer}>
+        <h2>Iniciar Sesión</h2>
+        
+        {error && <div className={styles.error}>{error}</div>}
+        
+        <form onSubmit={handleSubmit}>
+          <div className={styles.formGroup}>
+            <label htmlFor="email">Correo Electrónico</label>
             <input
-              id="email"
               type="email"
+              id="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="input-effect"
-              placeholder="correo@ejemplo.com"
               required
+              placeholder="ejemplo@correo.com"
             />
           </div>
 
-          <div>
-            <label htmlFor="password" className="form-label">
-              Contraseña
-            </label>
+          <div className={styles.formGroup}>
+            <label htmlFor="password">Contraseña</label>
             <input
-              id="password"
               type="password"
+              id="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="input-effect"
-              placeholder="••••••••"
               required
+              placeholder="********"
             />
           </div>
 
-          <button type="submit" className="button-gradient w-full">
-            Iniciar sesión
+          <button 
+            type="submit" 
+            className={styles.submitButton}
+            disabled={loading}
+          >
+            {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
           </button>
         </form>
 
-        <div className="mt-6 text-center">
-          <p className="text-gray-600">
-            ¿No tienes una cuenta?{' '}
-            <Link to="/register" className="link-hover">
-              Regístrate aquí
-            </Link>
-          </p>
-        </div>
+        <p className={styles.switchText}>
+          ¿No tienes una cuenta? <Link to="/register">Regístrate aquí</Link>
+        </p>
       </div>
     </div>
   );

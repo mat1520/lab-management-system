@@ -1,5 +1,5 @@
 # Etapa de construcción
-FROM node:18-alpine as builder
+FROM node:18-alpine as build
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Instalar dependencias
-RUN npm ci
+RUN npm install --legacy-peer-deps
 
 # Copiar código fuente
 COPY . .
@@ -22,10 +22,10 @@ FROM nginx:alpine
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copiar los archivos construidos
-COPY --from=builder /app/build /usr/share/nginx/html
+COPY --from=build /app/build /usr/share/nginx/html
 
 # Exponer puerto
-EXPOSE 3000
+EXPOSE 80
 
 # Comando para iniciar nginx
 CMD ["nginx", "-g", "daemon off;"] 

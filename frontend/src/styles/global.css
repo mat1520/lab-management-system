@@ -1,0 +1,33 @@
+:root {
+  --primary: #dc2626;
+  --primary-dark: #b91c1c;
+  --primary-light: #ef4444;
+  --secondary: #4b5563;
+  --secondary-dark: #374151;
+  --secondary-light: #6b7280;
+  --background: #f3f4f6;
+  --surface: #ffffff;
+  --text: #1f2937;
+  --text-light: #6b7280;
+  --error: #dc2626;
+  --success: #059669;
+  --warning: #d97706;
+  --info: #3b82f6;
+}
+
+.button-gradient {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.button-gradient:hover {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(220, 38, 38, 0.1), 0 2px 4px -1px rgba(220, 38, 38, 0.06);
+} 

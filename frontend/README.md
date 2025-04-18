@@ -1,79 +1,98 @@
-# Sistema de Gestión de Laboratorios
+# Sistema de Gestión de Laboratorios - Frontend
 
-![Estado del Despliegue](https://vercel.com/api/v1/deployments/your-deployment-id/status)
-![Licencia](https://img.shields.io/badge/licencia-MIT-blue.svg)
+Este es el frontend del Sistema de Gestión de Laboratorios, una aplicación web moderna para la gestión eficiente de laboratorios.
 
-## 🚀 Características
+## Características
 
-- Gestión completa de laboratorios
-- Control de acceso y permisos
-- Inventario de equipos
-- Reportes y análisis
-- Interfaz moderna y responsiva
+- 🎨 Interfaz moderna y responsiva
+- 🔐 Autenticación segura
+- 📊 Dashboard interactivo
+- 📱 Diseño adaptable a todos los dispositivos
+- 🌙 Modo oscuro/claro
+- ⚡ Rendimiento optimizado
 
-## 🛠️ Tecnologías
+## Tecnologías
 
 - React 18
-- TypeScript 4.9.5
+- TypeScript 4.9
 - Redux Toolkit
 - React Query
-- React Router
 - Tailwind CSS
-- Vercel (Despliegue)
+- ESLint & Prettier
 
-## 📦 Instalación
+## Requisitos
 
+- Node.js 18+
+- npm 8+
+
+## Instalación
+
+1. Clonar el repositorio:
 ```bash
-# Clonar el repositorio
-git clone https://github.com/mat1520/lab-management-system.git
-
-# Entrar al directorio
+git clone https://github.com/tu-usuario/lab-management-system.git
 cd lab-management-system/frontend
-
-# Instalar dependencias
-npm install
-
-# Iniciar en desarrollo
-npm start
-
-# Construir para producción
-npm run build
 ```
 
-## 🌐 Despliegue
+2. Instalar dependencias:
+```bash
+npm install --legacy-peer-deps
+```
 
-El proyecto está configurado para desplegarse automáticamente en Vercel:
+3. Crear archivo de variables de entorno:
+```bash
+cp .env.example .env
+```
 
-1. Cada push a la rama `main` activa un nuevo despliegue
-2. Los pull requests generan despliegues de preview
-3. La configuración está en `vercel.json`
+4. Iniciar el servidor de desarrollo:
+```bash
+npm start
+```
 
-## 📝 Scripts Disponibles
+## Scripts Disponibles
 
 - `npm start`: Inicia el servidor de desarrollo
-- `npm run build`: Construye la aplicación para producción
+- `npm build`: Construye la aplicación para producción
 - `npm test`: Ejecuta las pruebas
-- `npm run lint`: Verifica el código con ESLint
-- `npm run format`: Formatea el código con Prettier
+- `npm lint`: Verifica el código con ESLint
+- `npm format`: Formatea el código con Prettier
 
-## 🤝 Contribuir
+## Estructura del Proyecto
 
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+```
+frontend/
+├── public/          # Archivos estáticos
+├── src/
+│   ├── assets/      # Imágenes y recursos
+│   ├── components/  # Componentes reutilizables
+│   ├── contexts/    # Contextos de React
+│   ├── hooks/       # Hooks personalizados
+│   ├── pages/       # Páginas de la aplicación
+│   ├── store/       # Estado global (Redux)
+│   ├── styles/      # Estilos globales
+│   ├── types/       # Definiciones de tipos
+│   ├── App.tsx      # Componente principal
+│   └── index.tsx    # Punto de entrada
+├── .env.example     # Ejemplo de variables de entorno
+├── package.json     # Dependencias y scripts
+└── tsconfig.json    # Configuración de TypeScript
+```
+
+## Despliegue
+
+El proyecto está configurado para ser desplegado en Vercel. Para desplegar:
+
+1. Conectar el repositorio a Vercel
+2. Configurar las variables de entorno
+3. Desplegar automáticamente
+
+## Contribución
+
+1. Fork el repositorio
+2. Crear una rama para tu feature (`git checkout -b feature/AmazingFeature`)
 3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
 4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
+5. Abrir un Pull Request
 
-## 📄 Licencia
+## Licencia
 
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE.md](LICENSE.md) para detalles.
-
-## 👥 Autores
-
-- **Mat1520** - *Trabajo Inicial* - [mat1520](https://github.com/mat1520)
-
-## 🙏 Agradecimientos
-
-- React Team
-- Vercel Team
-- Todos los contribuidores 
+Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles. 

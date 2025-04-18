@@ -6,6 +6,9 @@ module.exports = {
     extend: {
       colors: {
         primary: {
+          DEFAULT: '#dc2626',
+          dark: '#b91c1c',
+          light: '#ef4444',
           50: '#f0f9ff',
           100: '#e0f2fe',
           200: '#bae6fd',
@@ -18,6 +21,9 @@ module.exports = {
           900: '#0c4a6e',
         },
         secondary: {
+          DEFAULT: '#4b5563',
+          dark: '#374151',
+          light: '#6b7280',
           50: '#f8fafc',
           100: '#f1f5f9',
           200: '#e2e8f0',
@@ -28,6 +34,12 @@ module.exports = {
           700: '#334155',
           800: '#1e293b',
           900: '#0f172a',
+        },
+        background: '#f3f4f6',
+        surface: '#ffffff',
+        text: {
+          DEFAULT: '#1f2937',
+          light: '#6b7280',
         },
         success: {
           50: '#f0fdf4',
@@ -80,10 +92,14 @@ module.exports = {
       },
       boxShadow: {
         'inner-lg': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
+        'glass': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
       },
       animation: {
         'spin-slow': 'spin 3s linear infinite',
         'bounce-slow': 'bounce 3s infinite',
+      },
+      backdropBlur: {
+        'glass': '10px',
       },
     },
   },

@@ -36,7 +36,6 @@
     }
   ],
   "env": {
-    "NODE_ENV": "production",
-    "CI": "false"
+    "REACT_APP_API_URL": "https://api.lab-management.com"
   }
 } 
