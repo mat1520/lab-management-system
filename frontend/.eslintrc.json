@@ -5,10 +5,8 @@
     "jest": true
   },
   "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
+    "react-app",
+    "react-app/jest"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -24,18 +22,12 @@
     "react/prop-types": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "no-console": ["warn", { "allow": ["warn", "error"] }],
-    "prettier/prettier": ["error", {
-      "singleQuote": true,
-      "trailingComma": "es5",
-      "printWidth": 100,
-      "tabWidth": 2,
-      "semi": true
-    }]
+    "prettier/prettier": "off"
   },
   "settings": {
     "react": {
