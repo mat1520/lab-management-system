@@ -4,6 +4,8 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
+import Dashboard from './pages/Dashboard';
+import PrivateRoute from './components/PrivateRoute';
 import { ThemeProvider } from './contexts/ThemeContext';
 
 const App: React.FC = () => {
@@ -14,6 +16,14 @@ const App: React.FC = () => {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </Layout>
     </ThemeProvider>
