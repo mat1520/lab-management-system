@@ -2,6 +2,18 @@
 
 A modern web application for managing laboratory resources and experiments, built with React, TypeScript, and Redux.
 
+## 🔑 Test Credentials
+
+```
+Admin User:
+Email: admin@example.com
+Password: admin123
+
+Regular User:
+Email: user@example.com
+Password: user123
+```
+
 ## 🚀 Features
 
 - User Authentication (Login/Register)
