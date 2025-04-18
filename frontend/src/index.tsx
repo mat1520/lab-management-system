@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import App from './App';
 import { store } from './store';
+import { ThemeProvider } from './contexts/ThemeContext';
 import './index.css';
 
 const queryClient = new QueryClient({
@@ -24,9 +25,11 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <ThemeProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </ThemeProvider>
       </QueryClientProvider>
     </Provider>
   </React.StrictMode>
