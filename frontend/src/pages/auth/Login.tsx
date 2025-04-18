@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../../store/slices/authSlice';
+import { AppDispatch } from '../../store';
 
 interface LoginCredentials {
   email: string;
@@ -9,7 +10,7 @@ interface LoginCredentials {
 }
 
 const Login: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const [formData, setFormData] = useState<LoginCredentials>({
     email: '',
@@ -29,8 +30,12 @@ const Login: React.FC = () => {
     setError('');
     
     try {
-      await dispatch(login(formData)).unwrap();
-      navigate('/');
+      const result = await dispatch(login(formData));
+      if (login.fulfilled.match(result)) {
+        navigate('/');
+      } else {
+        setError('Error al iniciar sesión. Por favor, intente nuevamente.');
+      }
     } catch (err) {
       setError('Error al iniciar sesión. Por favor, intente nuevamente.');
     }
