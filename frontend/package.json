@@ -44,7 +44,10 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "prettier/prettier": "off"
+    }
   },
   "browserslist": {
     "production": [
