@@ -1,95 +1,188 @@
 .container {
   min-height: calc(100vh - 64px);
-  background-color: var(--background);
-  padding: 2rem;
+  background: linear-gradient(135deg, var(--background) 0%, var(--surface) 100%);
+  overflow: hidden;
 }
 
+/* Hero Section */
 .hero {
-  text-align: center;
-  padding: 4rem 2rem;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-  border-radius: 1rem;
-  color: white;
-  margin-bottom: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4rem 8%;
+  position: relative;
+  gap: 4rem;
 }
 
-.hero h1 {
-  font-size: 3rem;
+.heroContent {
+  flex: 1;
+  max-width: 600px;
+}
+
+.title {
+  font-size: 4rem;
   font-weight: 700;
-  margin-bottom: 1rem;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, var(--text) 0%, var(--text-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.hero p {
-  font-size: 1.2rem;
-  opacity: 0.9;
+.highlight {
+  color: var(--primary);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
   margin-bottom: 2rem;
+  line-height: 1.6;
 }
 
-.cta {
+.ctaContainer {
   display: flex;
   gap: 1rem;
-  justify-content: center;
 }
 
 .primaryButton {
-  background: white;
-  color: var(--primary);
-  padding: 0.75rem 2rem;
-  border-radius: 0.5rem;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: white;
+  border-radius: 0.75rem;
   font-weight: 600;
-  transition: all 0.3s ease;
   text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
 }
 
 .primaryButton:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
 }
 
 .secondaryButton {
+  padding: 1rem 2rem;
   background: transparent;
-  color: white;
-  padding: 0.75rem 2rem;
-  border-radius: 0.5rem;
+  color: var(--text);
+  border: 2px solid var(--primary);
+  border-radius: 0.75rem;
   font-weight: 600;
-  border: 2px solid white;
-  transition: all 0.3s ease;
   text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .secondaryButton:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(67, 97, 238, 0.1);
   transform: translateY(-2px);
 }
 
-.features {
-  padding: 4rem 2rem;
+/* Hero Image */
+.heroImage {
+  flex: 1;
+  max-width: 600px;
+  perspective: 1000px;
+}
+
+.glassCard {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  transform: rotateY(-15deg) rotateX(5deg);
+  transition: transform 0.3s ease;
+}
+
+.glassCard:hover {
+  transform: rotateY(-5deg) rotateX(2deg);
+}
+
+.cardHeader {
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.cardDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.cardContent {
+  padding: 2rem;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+}
+
+.statItem {
   text-align: center;
 }
 
-.features h2 {
+.statItem h3 {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.statItem p {
+  color: var(--text);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* Features Section */
+.features {
+  padding: 6rem 8%;
+  text-align: center;
+}
+
+.sectionTitle {
   font-size: 2.5rem;
   color: var(--text);
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
+  background: linear-gradient(135deg, var(--text) 0%, var(--text-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .featureGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2rem;
-  margin-bottom: 4rem;
+  margin-top: 3rem;
 }
 
 .featureCard {
-  background: var(--surface);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 2rem;
   border-radius: 1rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
 }
 
 .featureCard:hover {
-  transform: translateY(-4px);
+  transform: translateY(-10px);
+}
+
+.featureIcon {
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 1.5rem;
 }
 
 .featureCard h3 {
@@ -99,61 +192,136 @@
 }
 
 .featureCard p {
-  color: var(--text-light);
+  color: var(--text-secondary);
   line-height: 1.6;
 }
 
+/* Stats Section */
 .stats {
+  padding: 6rem 8%;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.statsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 2rem;
-  padding: 4rem 2rem;
-  background: var(--surface);
-  border-radius: 1rem;
-  margin-top: 4rem;
 }
 
 .statCard {
   text-align: center;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.statCard:hover {
+  transform: translateY(-5px);
 }
 
 .statCard h3 {
   font-size: 3rem;
   color: var(--primary);
   margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .statCard p {
-  color: var(--text-light);
+  color: var(--text-secondary);
   font-size: 1.1rem;
 }
 
-@media (max-width: 768px) {
-  .container {
-    padding: 1rem;
-  }
+/* CTA Section */
+.cta {
+  padding: 6rem 8%;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(58, 12, 163, 0.1) 100%);
+}
 
+.ctaContent {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.cta h2 {
+  font-size: 2.5rem;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, var(--text) 0%, var(--text-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.cta p {
+  color: var(--text-secondary);
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
   .hero {
-    padding: 2rem 1rem;
+    flex-direction: column;
+    text-align: center;
+    padding: 4rem 4%;
   }
 
-  .hero h1 {
-    font-size: 2rem;
+  .heroContent {
+    max-width: 100%;
   }
 
-  .features {
-    padding: 2rem 1rem;
+  .title {
+    font-size: 3rem;
   }
 
-  .features h2 {
-    font-size: 2rem;
+  .ctaContainer {
+    justify-content: center;
   }
 
+  .heroImage {
+    max-width: 100%;
+  }
+
+  .features,
+  .stats,
   .cta {
+    padding: 4rem 4%;
+  }
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 2.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+  }
+
+  .ctaContainer {
     flex-direction: column;
   }
 
-  .stats {
-    padding: 2rem 1rem;
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
+  }
+
+  .sectionTitle {
+    font-size: 2rem;
+  }
+
+  .featureCard h3 {
+    font-size: 1.25rem;
+  }
+
+  .statCard h3 {
+    font-size: 2.5rem;
   }
 } 
