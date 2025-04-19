@@ -2,13 +2,14 @@ import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FiShield, FiLock, FiUsers, FiActivity, FiCode, FiServer } from 'react-icons/fi';
-import Particles from 'react-particles';
-import { loadFull } from "tsparticles";
-import type { Container, Engine } from "tsparticles-engine";
+import { Particles } from "@tsparticles/react";
+import { Engine } from "@tsparticles/engine";
 
 const Home: React.FC = () => {
   const particlesInit = async (engine: Engine) => {
-    await loadFull(engine);
+    await import("@tsparticles/slim").then((module) => {
+      module.loadSlim(engine);
+    });
   };
 
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -35,10 +36,10 @@ const Home: React.FC = () => {
           fpsLimit: 120,
           particles: {
             color: {
-              value: "#3B82F6",
+              value: "#ff003c",
             },
             links: {
-              color: "#3B82F6",
+              color: "#ff003c",
               distance: 150,
               enable: true,
               opacity: 0.2,
@@ -71,8 +72,8 @@ const Home: React.FC = () => {
       <div className="absolute top-0 left-0 w-full h-full bg-grid-pattern opacity-10 -z-10"></div>
 
       {/* Glowing Circles */}
-      <div className="absolute top-1/4 -left-32 w-64 h-64 bg-blue-500/20 rounded-full filter blur-3xl animate-pulse-slow"></div>
-      <div className="absolute bottom-1/4 -right-32 w-64 h-64 bg-purple-500/20 rounded-full filter blur-3xl animate-pulse-slow delay-1000"></div>
+      <div className="absolute top-1/4 -left-32 w-64 h-64 bg-primary/20 rounded-full filter blur-3xl animate-pulse-slow"></div>
+      <div className="absolute bottom-1/4 -right-32 w-64 h-64 bg-primary/20 rounded-full filter blur-3xl animate-pulse-slow delay-1000"></div>
 
       {/* Main Content */}
       <div className="relative z-10 container mx-auto px-4 min-h-screen flex flex-col">
@@ -89,7 +90,7 @@ const Home: React.FC = () => {
               <h1 className="text-8xl md:text-9xl font-bold font-display tracking-tight cyber-glitch-effect">
                 LabSec
               </h1>
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/30 to-blue-500/0 animate-gradient-x"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/30 to-primary/0 animate-gradient-x"></div>
             </div>
           </motion.div>
 
@@ -100,10 +101,10 @@ const Home: React.FC = () => {
             transition={{ delay: 0.3, duration: 0.8 }}
             className="max-w-4xl mb-12"
           >
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 text-transparent bg-clip-text">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-secondary to-primary text-transparent bg-clip-text">
               Sistema de Gestión de Laboratorios de Ciberseguridad
             </h2>
-            <p className="text-xl md:text-2xl text-blue-100/80">
+            <p className="text-xl md:text-2xl text-text-secondary">
               Plataforma integral para la gestión, monitoreo y seguridad de laboratorios especializados en ciberseguridad.
             </p>
           </motion.div>
@@ -120,16 +121,16 @@ const Home: React.FC = () => {
               className="cyber-button-primary group relative"
             >
               <span className="relative z-10">Iniciar Sesión</span>
-              <div className="absolute inset-0 transform group-hover:translate-x-1 group-hover:translate-y-1 bg-blue-600 transition-transform"></div>
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500"></div>
+              <div className="absolute inset-0 transform group-hover:translate-x-1 group-hover:translate-y-1 bg-primary-dark transition-transform"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary-light"></div>
             </Link>
             <Link
               to="/auth/register"
               className="cyber-button-secondary group relative"
             >
               <span className="relative z-10">Registrarse</span>
-              <div className="absolute inset-0 transform group-hover:translate-x-1 group-hover:translate-y-1 bg-purple-700/50 transition-transform"></div>
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-blue-500/50"></div>
+              <div className="absolute inset-0 transform group-hover:translate-x-1 group-hover:translate-y-1 bg-secondary/50 transition-transform"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-secondary/20 to-primary/20 border border-primary/50"></div>
             </Link>
           </motion.div>
         </main>
