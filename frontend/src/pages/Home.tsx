@@ -1,104 +1,139 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FiShield, FiLock, FiUsers, FiActivity, FiCode, FiServer } from 'react-icons/fi';
+import Particles from 'react-particles';
+import { loadFull } from "tsparticles";
+import type { Container, Engine } from "tsparticles-engine";
 
 const Home: React.FC = () => {
+  const particlesInit = async (engine: Engine) => {
+    await loadFull(engine);
+  };
+
+  const titleRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    if (titleRef.current) {
+      titleRef.current.style.opacity = '1';
+      titleRef.current.style.transform = 'translateY(0)';
+    }
+  }, []);
+
   return (
-    <div className="page-container flex flex-col min-h-screen">
-      {/* Elementos de acento con más brillo y animación */}
-      <div className="fixed top-0 left-0 w-[500px] h-[500px] accent-circle animate-pulse-glow" style={{ opacity: 0.15 }}></div>
-      <div className="fixed bottom-0 right-0 w-[500px] h-[500px] accent-circle animate-pulse-glow" style={{ opacity: 0.15 }}></div>
-      <div className="fixed inset-0 accent-grid"></div>
-      
-      {/* Hero Section Mejorado - Ahora centrado verticalmente */}
-      <section className="flex-1 relative z-10 flex flex-col items-center justify-center px-4 md:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-          className="text-center max-w-6xl mx-auto"
-        >
-          <h1 className="text-7xl md:text-8xl lg:text-9xl font-bold mb-8 bg-gradient-to-r from-blue-500 via-primary to-purple-500 text-transparent bg-clip-text animate-gradient">
-            LabSec
-          </h1>
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+    <div className="relative min-h-screen bg-background overflow-hidden">
+      {/* Particles Background */}
+      <Particles
+        id="tsparticles"
+        init={particlesInit}
+        options={{
+          background: {
+            color: {
+              value: "transparent",
+            },
+          },
+          fpsLimit: 120,
+          particles: {
+            color: {
+              value: "#3B82F6",
+            },
+            links: {
+              color: "#3B82F6",
+              distance: 150,
+              enable: true,
+              opacity: 0.2,
+              width: 1,
+            },
+            move: {
+              enable: true,
+              speed: 1,
+            },
+            number: {
+              density: {
+                enable: true,
+                area: 800,
+              },
+              value: 80,
+            },
+            opacity: {
+              value: 0.2,
+            },
+            size: {
+              value: { min: 1, max: 3 },
+            },
+          },
+        }}
+        className="absolute inset-0 -z-10"
+      />
+
+      {/* Gradient Overlays */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/50 to-background -z-10"></div>
+      <div className="absolute top-0 left-0 w-full h-full bg-grid-pattern opacity-10 -z-10"></div>
+
+      {/* Glowing Circles */}
+      <div className="absolute top-1/4 -left-32 w-64 h-64 bg-blue-500/20 rounded-full filter blur-3xl animate-pulse-slow"></div>
+      <div className="absolute bottom-1/4 -right-32 w-64 h-64 bg-purple-500/20 rounded-full filter blur-3xl animate-pulse-slow delay-1000"></div>
+
+      {/* Main Content */}
+      <div className="relative z-10 container mx-auto px-4 min-h-screen flex flex-col">
+        {/* Hero Section */}
+        <main className="flex-1 flex flex-col items-center justify-center text-center py-16">
+          {/* Logo Animation */}
+          <motion.div
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="mb-8"
+          >
+            <div className="relative inline-block">
+              <h1 className="text-8xl md:text-9xl font-bold font-display tracking-tight cyber-glitch-effect">
+                LabSec
+              </h1>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/30 to-blue-500/0 animate-gradient-x"></div>
+            </div>
+          </motion.div>
+
+          {/* Title and Description */}
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.8 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-text-primary leading-tight"
+            className="max-w-4xl mb-12"
           >
-            Sistema de Gestión de Laboratorios de Ciberseguridad
-          </motion.h2>
-        </motion.div>
-        
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-          className="max-w-3xl text-xl md:text-2xl text-text-secondary leading-relaxed text-center mb-12"
-        >
-          Plataforma integral para la gestión, monitoreo y seguridad de laboratorios especializados en ciberseguridad.
-        </motion.p>
-        
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.8 }}
-          className="flex flex-col sm:flex-row gap-6"
-        >
-          <Link 
-            to="/auth/login" 
-            className="btn-cyber-primary text-lg px-12 py-5 min-w-[200px] text-center"
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 text-transparent bg-clip-text">
+              Sistema de Gestión de Laboratorios de Ciberseguridad
+            </h2>
+            <p className="text-xl md:text-2xl text-blue-100/80">
+              Plataforma integral para la gestión, monitoreo y seguridad de laboratorios especializados en ciberseguridad.
+            </p>
+          </motion.div>
+
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="flex flex-col sm:flex-row gap-6"
           >
-            Iniciar Sesión
-          </Link>
-          <Link 
-            to="/auth/register" 
-            className="btn-cyber-secondary text-lg px-12 py-5 min-w-[200px] text-center"
-          >
-            Registrarse
-          </Link>
-        </motion.div>
-      </section>
-      
-      {/* Features Section con animaciones mejoradas */}
-      <section className="relative z-10 py-20 px-4 md:px-8 bg-surface/30 backdrop-blur-lg mt-20">
-        <div className="max-w-7xl mx-auto">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-blue-500 via-primary to-purple-500 text-transparent bg-clip-text"
-          >
-            Características Principales
-          </motion.h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="card glass-card p-8 hover:transform hover:scale-105 transition-all duration-300"
-              >
-                <div className="flex items-center mb-6">
-                  <div className="p-4 rounded-2xl bg-primary/20 text-primary mr-4 animate-pulse-slow">
-                    {feature.icon}
-                  </div>
-                  <h3 className="text-2xl font-semibold bg-gradient-to-r from-blue-500 to-primary text-transparent bg-clip-text">
-                    {feature.title}
-                  </h3>
-                </div>
-                <p className="text-text-secondary text-lg">{feature.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+            <Link
+              to="/auth/login"
+              className="cyber-button-primary group relative"
+            >
+              <span className="relative z-10">Iniciar Sesión</span>
+              <div className="absolute inset-0 transform group-hover:translate-x-1 group-hover:translate-y-1 bg-blue-600 transition-transform"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500"></div>
+            </Link>
+            <Link
+              to="/auth/register"
+              className="cyber-button-secondary group relative"
+            >
+              <span className="relative z-10">Registrarse</span>
+              <div className="absolute inset-0 transform group-hover:translate-x-1 group-hover:translate-y-1 bg-purple-700/50 transition-transform"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-blue-500/50"></div>
+            </Link>
+          </motion.div>
+        </main>
+      </div>
     </div>
   );
 };
