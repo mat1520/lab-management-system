@@ -19,21 +19,91 @@
   body {
     @apply bg-background text-text-primary;
     font-family: 'Inter', sans-serif;
+    background-image: 
+      linear-gradient(to bottom, rgba(30, 144, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(to right, rgba(30, 144, 255, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-attachment: fixed;
   }
 }
 
 @layer components {
-  .card {
-    @apply bg-surface rounded-lg border border-primary/20 shadow-lg hover:shadow-xl transition-all duration-300;
+  .cyber-card {
+    @apply bg-surface/80 backdrop-blur-lg rounded-lg border border-primary/20 shadow-lg hover:shadow-xl transition-all duration-300;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cyber-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  }
+
+  .cyber-button {
+    @apply px-8 py-3 rounded-lg font-medium text-white relative overflow-hidden;
+    position: relative;
+  }
+
+  .cyber-button span {
+    @apply relative z-10 flex items-center justify-center;
+  }
+
+  .cyber-button:hover {
+    transform: translateY(-1px);
+  }
+
+  .cyber-button-secondary {
+    @apply px-8 py-3 rounded-lg font-medium text-text-primary relative overflow-hidden;
+    position: relative;
+  }
+
+  .cyber-button-secondary span {
+    @apply relative z-10 flex items-center justify-center;
+  }
+
+  .cyber-button-secondary:hover {
+    transform: translateY(-1px);
   }
 
   .nav-link {
-    @apply text-text-secondary hover:text-text-primary transition-colors duration-300;
+    @apply text-text-secondary hover:text-text-primary transition-colors duration-300 relative;
+    position: relative;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transition: width 0.3s ease;
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
   }
 
   .container {
     @apply max-w-7xl mx-auto px-4;
   }
+}
+
+.bg-grid-pattern {
+  background-size: 50px 50px;
+  background-image: 
+    linear-gradient(to right, rgba(30, 144, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(30, 144, 255, 0.05) 1px, transparent 1px);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Orbitron', sans-serif;
 }
 
 /* Animaciones básicas */
@@ -48,13 +118,6 @@
 
 .animate-fadeIn {
   animation: fadeIn 0.5s ease-in-out;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Orbitron', sans-serif;
-  color: var(--text-primary);
-  text-shadow: var(--glow-text);
-  letter-spacing: 0.05em;
 }
 
 .button {
