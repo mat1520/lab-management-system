@@ -1,0 +1,29 @@
+:root {
+  /* Colores principales */
+  --primary: #dc2626;
+  --primary-light: #ef4444;
+  --primary-dark: #b91c1c;
+  
+  /* Colores secundarios */
+  --secondary: #4f46e5;
+  --secondary-light: #6366f1;
+  --secondary-dark: #4338ca;
+  
+  /* Colores de fondo */
+  --background: #111827;
+  --surface: #1f2937;
+  
+  /* Colores de texto */
+  --text: #f3f4f6;
+  --text-secondary: #9ca3af;
+  
+  /* Colores de estado */
+  --error: #ef4444;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  
+  /* Sombras */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+} 
