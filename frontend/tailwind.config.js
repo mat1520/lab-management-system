@@ -1,60 +1,40 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   darkMode: 'class',
   theme: {
     extend: {
+      fontFamily: {
+        inter: ['Inter', 'sans-serif'],
+        orbitron: ['Orbitron', 'sans-serif'],
+      },
       colors: {
+        background: {
+          DEFAULT: '#0A0F2C',
+          secondary: '#121830',
+        },
         primary: {
-          DEFAULT: 'var(--primary)',
-          light: 'var(--primary-light)',
-          dark: 'var(--primary-dark)',
+          DEFAULT: '#1E90FF',
+          light: '#33A1FF',
+          dark: '#0066CC',
         },
         secondary: {
-          DEFAULT: 'var(--secondary)',
-          light: 'var(--secondary-light)',
-          dark: 'var(--secondary-dark)',
+          DEFAULT: '#00FFFF',
+          light: '#33FFFF',
+          dark: '#00CCCC',
         },
-        background: {
-          DEFAULT: 'var(--background)',
-          light: 'var(--background-light)',
-          dark: 'var(--background-dark)',
-        },
-        surface: {
-          DEFAULT: 'var(--surface)',
-          light: 'var(--surface-light)',
-        },
-        text: {
-          DEFAULT: 'var(--text)',
-          secondary: 'var(--text-secondary)',
-          tertiary: 'var(--text-tertiary)',
-          muted: 'var(--text-muted)',
-        },
-        error: {
-          DEFAULT: 'var(--error)',
-          light: 'var(--error-light)',
-        },
-        success: {
-          DEFAULT: 'var(--success)',
-          light: 'var(--success-light)',
-        },
-        warning: {
-          DEFAULT: 'var(--warning)',
-          light: 'var(--warning-light)',
-        },
-      },
-      fontFamily: {
-        sans: ['Orbitron', 'sans-serif'],
-        mono: ['Share Tech Mono', 'monospace'],
-      },
-      boxShadow: {
-        'neon': 'var(--neon-glow)',
-        'glass': 'var(--glass-shadow)',
+        success: '#00FF99',
+        warning: '#FFD700',
+        error: '#FF2058',
       },
       animation: {
-        'pulse-glow': 'pulse-glow 2s infinite',
+        'pulse-glow': 'pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'float': 'float 3s ease-in-out infinite',
+        'glitch': 'glitch 500ms infinite',
       },
       keyframes: {
         'pulse-glow': {
@@ -67,13 +47,18 @@ module.exports = {
             transform: 'scale(1.05)',
           },
         },
-      },
-      backdropBlur: {
-        'glass': '12px',
+        'float': {
+          '0%, 100%': {
+            transform: 'translateY(0)',
+          },
+          '50%': {
+            transform: 'translateY(-10px)',
+          },
+        },
       },
       backgroundImage: {
-        'glass': 'var(--glass-background)',
-        'grid': 'linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color) 1px, transparent 1px)',
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
     },
   },
