@@ -1,130 +1,189 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../store';
-import { logout } from '../store/slices/authSlice';
-import { FiMenu, FiX, FiUser, FiLogOut } from 'react-icons/fi';
+import { FiMenu, FiX, FiHome, FiShield, FiUsers, FiSettings, FiLogOut } from 'react-icons/fi';
 
 const Navbar: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
-  const dispatch = useDispatch();
-  const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  const handleLogout = () => {
-    dispatch(logout());
+  useEffect(() => {
+    const handleScroll = () => {
+      const offset = window.scrollY;
+      if (offset > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
+
+  const isActive = (path: string) => {
+    return location.pathname === path;
   };
 
   return (
-    <nav className="glass-effect sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              Lab Management
-            </span>
-          </Link>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-surface/80 backdrop-blur-md shadow-md' : 'bg-transparent'}`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <div className="flex-shrink-0">
+            <Link to="/" className="flex items-center">
+              <span className="text-2xl font-display font-bold bg-gradient-cyber bg-clip-text text-transparent">
+                LabSec
+              </span>
+            </Link>
+          </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6">
-            {isAuthenticated ? (
-              <>
-                <Link
-                  to="/dashboard"
-                  className={`nav-link ${
-                    location.pathname === '/dashboard' ? 'text-primary' : ''
-                  }`}
-                >
-                  Dashboard
-                </Link>
-                <div className="flex items-center space-x-4">
-                  <span className="text-text-secondary">
-                    <FiUser className="inline-block mr-2" />
-                    {user?.name}
-                  </span>
-                  <button
-                    onClick={handleLogout}
-                    className="button-gradient"
-                  >
-                    <FiLogOut className="inline-block" />
-                    Cerrar Sesión
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <Link
-                  to="/login"
-                  className={`nav-link ${
-                    location.pathname === '/login' ? 'text-primary' : ''
-                  }`}
-                >
-                  Iniciar Sesión
-                </Link>
-                <Link
-                  to="/register"
-                  className="button-gradient"
-                >
-                  Crear Cuenta
-                </Link>
-              </>
-            )}
+          <div className="hidden md:block">
+            <div className="ml-10 flex items-center space-x-4">
+              <Link 
+                to="/" 
+                className={`nav-link ${isActive('/') ? 'active' : ''}`}
+              >
+                <FiHome className="inline-block mr-2" />
+                Inicio
+              </Link>
+              <Link 
+                to="/dashboard" 
+                className={`nav-link ${isActive('/dashboard') ? 'active' : ''}`}
+              >
+                <FiShield className="inline-block mr-2" />
+                Dashboard
+              </Link>
+              <Link 
+                to="/users" 
+                className={`nav-link ${isActive('/users') ? 'active' : ''}`}
+              >
+                <FiUsers className="inline-block mr-2" />
+                Usuarios
+              </Link>
+              <Link 
+                to="/settings" 
+                className={`nav-link ${isActive('/settings') ? 'active' : ''}`}
+              >
+                <FiSettings className="inline-block mr-2" />
+                Configuración
+              </Link>
+            </div>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-text-primary p-2"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-          </button>
-        </div>
-
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden mt-4 py-4 border-t border-gray-700">
-            {isAuthenticated ? (
-              <div className="flex flex-col space-y-4">
-                <Link
-                  to="/dashboard"
-                  className={`nav-link ${
-                    location.pathname === '/dashboard' ? 'text-primary' : ''
-                  }`}
-                >
-                  Dashboard
-                </Link>
-                <div className="flex items-center space-x-2 text-text-secondary">
-                  <FiUser />
-                  <span>{user?.name}</span>
+          {/* User Menu */}
+          <div className="hidden md:flex items-center">
+            <div className="relative ml-3">
+              <div className="flex items-center">
+                <div className="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+                  <span className="text-sm font-medium">JD</span>
                 </div>
-                <button
-                  onClick={handleLogout}
-                  className="button-gradient w-full"
-                >
-                  <FiLogOut className="inline-block mr-2" />
-                  Cerrar Sesión
+                <button className="ml-2 text-text-secondary hover:text-text-primary transition-colors">
+                  <FiLogOut size={20} />
                 </button>
               </div>
-            ) : (
-              <div className="flex flex-col space-y-4">
-                <Link
-                  to="/login"
-                  className={`nav-link ${
-                    location.pathname === '/login' ? 'text-primary' : ''
-                  }`}
-                >
-                  Iniciar Sesión
-                </Link>
-                <Link
-                  to="/register"
-                  className="button-gradient w-full text-center"
-                >
-                  Crear Cuenta
-                </Link>
-              </div>
-            )}
+            </div>
           </div>
-        )}
+
+          {/* Mobile menu button */}
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={toggleMenu}
+              className="inline-flex items-center justify-center p-2 rounded-md text-text-secondary hover:text-text-primary hover:bg-surface-light focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary"
+            >
+              <span className="sr-only">Abrir menú principal</span>
+              {isOpen ? (
+                <FiX className="block h-6 w-6" />
+              ) : (
+                <FiMenu className="block h-6 w-6" />
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile menu */}
+      <div className={`md:hidden ${isOpen ? 'block' : 'hidden'}`}>
+        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-surface/95 backdrop-blur-md shadow-lg">
+          <Link
+            to="/"
+            className={`block px-3 py-2 rounded-md text-base font-medium ${
+              isActive('/') 
+                ? 'text-primary bg-primary/10' 
+                : 'text-text-secondary hover:text-text-primary hover:bg-surface-light'
+            }`}
+            onClick={closeMenu}
+          >
+            <FiHome className="inline-block mr-2" />
+            Inicio
+          </Link>
+          <Link
+            to="/dashboard"
+            className={`block px-3 py-2 rounded-md text-base font-medium ${
+              isActive('/dashboard') 
+                ? 'text-primary bg-primary/10' 
+                : 'text-text-secondary hover:text-text-primary hover:bg-surface-light'
+            }`}
+            onClick={closeMenu}
+          >
+            <FiShield className="inline-block mr-2" />
+            Dashboard
+          </Link>
+          <Link
+            to="/users"
+            className={`block px-3 py-2 rounded-md text-base font-medium ${
+              isActive('/users') 
+                ? 'text-primary bg-primary/10' 
+                : 'text-text-secondary hover:text-text-primary hover:bg-surface-light'
+            }`}
+            onClick={closeMenu}
+          >
+            <FiUsers className="inline-block mr-2" />
+            Usuarios
+          </Link>
+          <Link
+            to="/settings"
+            className={`block px-3 py-2 rounded-md text-base font-medium ${
+              isActive('/settings') 
+                ? 'text-primary bg-primary/10' 
+                : 'text-text-secondary hover:text-text-primary hover:bg-surface-light'
+            }`}
+            onClick={closeMenu}
+          >
+            <FiSettings className="inline-block mr-2" />
+            Configuración
+          </Link>
+          <div className="pt-4 pb-3 border-t border-surface-light">
+            <div className="flex items-center px-3">
+              <div className="flex-shrink-0">
+                <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+                  <span className="text-sm font-medium">JD</span>
+                </div>
+              </div>
+              <div className="ml-3">
+                <div className="text-base font-medium text-text-primary">John Doe</div>
+                <div className="text-sm font-medium text-text-secondary">john@example.com</div>
+              </div>
+            </div>
+            <div className="mt-3 px-3">
+              <button className="w-full flex items-center px-3 py-2 rounded-md text-base font-medium text-text-secondary hover:text-text-primary hover:bg-surface-light">
+                <FiLogOut className="mr-2" />
+                Cerrar Sesión
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </nav>
   );
