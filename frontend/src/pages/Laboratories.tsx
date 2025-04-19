@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FiMonitor, FiClock, FiUsers, FiAlertCircle, FiCheckCircle } from 'react-icons/fi';
+import { FiActivity, FiClock, FiUsers, FiAlertCircle, FiCheckCircle } from 'react-icons/fi';
 
 interface Laboratory {
   id: string;
@@ -137,7 +137,7 @@ const Laboratories: React.FC = () => {
                         key={index}
                         className="flex items-center space-x-2 text-text-muted"
                       >
-                        <FiMonitor className="w-4 h-4" />
+                        <FiActivity className="w-4 h-4" />
                         <span>{item}</span>
                       </div>
                     ))}

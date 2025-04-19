@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FiBeaker, FiCalendar, FiAlertTriangle, FiClock, FiTool, FiUsers } from 'react-icons/fi';
+import { FiActivity, FiCalendar, FiAlertTriangle, FiClock, FiTool, FiUsers } from 'react-icons/fi';
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ const Dashboard: React.FC = () => {
       title: 'Laboratorios Activos',
       value: '5',
       description: 'En uso actualmente',
-      icon: <FiBeaker className="w-6 h-6 text-primary" />,
+      icon: <FiActivity className="w-6 h-6 text-primary" />,
       color: 'bg-primary/10',
     },
     {
@@ -127,7 +127,7 @@ const Dashboard: React.FC = () => {
                 onClick={() => navigate('/laboratorios')}
                 className="w-full p-4 rounded-xl bg-surface-light hover:bg-surface-light/80 text-text font-medium transition-colors duration-300 flex items-center justify-center space-x-2"
               >
-                <FiBeaker className="w-5 h-5" />
+                <FiActivity className="w-5 h-5" />
                 <span>Ver Laboratorios</span>
               </button>
               <button
