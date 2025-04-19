@@ -1,16 +1,19 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FiShield, FiLock, FiUsers, FiActivity, FiCode, FiServer } from 'react-icons/fi';
 import { Particles } from "@tsparticles/react";
-import { Engine } from "@tsparticles/engine";
+import { type Container, type Engine } from "@tsparticles/engine";
+import { loadSlim } from "@tsparticles/slim";
 
 const Home: React.FC = () => {
-  const particlesInit = async (engine: Engine) => {
-    await import("@tsparticles/slim").then((module) => {
-      module.loadSlim(engine);
-    });
-  };
+  const particlesInit = useCallback(async (engine: Engine) => {
+    await loadSlim(engine);
+  }, []);
+
+  const particlesLoaded = useCallback(async (container: Container | undefined) => {
+    console.log(container);
+  }, []);
 
   const titleRef = useRef<HTMLHeadingElement>(null);
 
@@ -27,13 +30,13 @@ const Home: React.FC = () => {
       <Particles
         id="tsparticles"
         init={particlesInit}
+        loaded={particlesLoaded}
         options={{
           background: {
             color: {
               value: "transparent",
             },
           },
-          fpsLimit: 120,
           particles: {
             color: {
               value: "#ff003c",
@@ -50,11 +53,7 @@ const Home: React.FC = () => {
               speed: 1,
             },
             number: {
-              density: {
-                enable: true,
-                area: 800,
-              },
-              value: 80,
+              value: 50,
             },
             opacity: {
               value: 0.2,
