@@ -8,6 +8,11 @@ import Dashboard from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
 import { ThemeProvider } from './contexts/ThemeContext';
 
+// Páginas adicionales
+import Features from './pages/Features';
+import Pricing from './pages/Pricing';
+import About from './pages/About';
+
 const App: React.FC = () => {
   return (
     <ThemeProvider>
@@ -15,7 +20,11 @@ const App: React.FC = () => {
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/auth/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/features" element={<Features />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/about" element={<About />} />
           <Route
             path="/dashboard"
             element={

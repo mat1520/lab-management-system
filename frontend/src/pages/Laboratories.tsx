@@ -1,163 +1,215 @@
-import React, { useState } from 'react';
-import { FiActivity, FiClock, FiUsers, FiAlertCircle, FiCheckCircle } from 'react-icons/fi';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { FiCpu, FiShield, FiUsers, FiClock, FiActivity } from 'react-icons/fi';
 
 interface Laboratory {
   id: string;
   name: string;
-  status: 'available' | 'in-use' | 'maintenance';
-  capacity: number;
-  equipment: string[];
-  nextReservation?: string;
-  currentUsers?: number;
+  description: string;
+  status: 'active' | 'maintenance' | 'offline';
+  users: number;
+  maxUsers: number;
+  cpuUsage: number;
+  memoryUsage: number;
+  lastActivity: string;
+  securityLevel: 'low' | 'medium' | 'high';
 }
 
-const Laboratories: React.FC = () => {
-  const [laboratories] = useState<Laboratory[]>([
-    {
-      id: '101',
-      name: 'Laboratorio de Química',
-      status: 'available',
-      capacity: 30,
-      equipment: ['Microscopios', 'Balanzas Analíticas', 'Espectrofotómetro'],
-      nextReservation: '14:30',
-    },
-    {
-      id: '102',
-      name: 'Laboratorio de Física',
-      status: 'in-use',
-      capacity: 25,
-      equipment: ['Osciloscopios', 'Generadores de Señales', 'Multímetros'],
-      currentUsers: 18,
-    },
-    {
-      id: '103',
-      name: 'Laboratorio de Biología',
-      status: 'maintenance',
-      capacity: 20,
-      equipment: ['Microscopios', 'Centrífugas', 'Incubadoras'],
-    },
-  ]);
+const laboratories: Laboratory[] = [
+  {
+    id: 'lab-1',
+    name: 'Laboratorio de Redes',
+    description: 'Entorno para pruebas de configuración de redes y seguridad.',
+    status: 'active',
+    users: 5,
+    maxUsers: 10,
+    cpuUsage: 45,
+    memoryUsage: 60,
+    lastActivity: '2024-02-20T10:30:00',
+    securityLevel: 'high'
+  },
+  {
+    id: 'lab-2',
+    name: 'Laboratorio de Ciberseguridad',
+    description: 'Espacio para pruebas de penetración y análisis de vulnerabilidades.',
+    status: 'active',
+    users: 3,
+    maxUsers: 8,
+    cpuUsage: 75,
+    memoryUsage: 80,
+    lastActivity: '2024-02-20T11:15:00',
+    securityLevel: 'high'
+  },
+  {
+    id: 'lab-3',
+    name: 'Laboratorio de Desarrollo',
+    description: 'Entorno para desarrollo y pruebas de aplicaciones.',
+    status: 'maintenance',
+    users: 0,
+    maxUsers: 15,
+    cpuUsage: 0,
+    memoryUsage: 0,
+    lastActivity: '2024-02-19T18:00:00',
+    securityLevel: 'medium'
+  }
+];
 
+const Laboratories = () => {
   const getStatusColor = (status: Laboratory['status']) => {
     switch (status) {
-      case 'available':
-        return 'text-success bg-success/10';
-      case 'in-use':
-        return 'text-primary bg-primary/10';
+      case 'active':
+        return 'text-success';
       case 'maintenance':
-        return 'text-error bg-error/10';
+        return 'text-warning';
+      case 'offline':
+        return 'text-error';
+      default:
+        return 'text-text-secondary';
     }
   };
 
-  const getStatusText = (status: Laboratory['status']) => {
-    switch (status) {
-      case 'available':
-        return 'Disponible';
-      case 'in-use':
-        return 'En Uso';
-      case 'maintenance':
-        return 'Mantenimiento';
+  const getSecurityLevelColor = (level: Laboratory['securityLevel']) => {
+    switch (level) {
+      case 'high':
+        return 'text-error';
+      case 'medium':
+        return 'text-warning';
+      case 'low':
+        return 'text-success';
+      default:
+        return 'text-text-secondary';
+    }
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5
+      }
     }
   };
 
   return (
-    <div className="min-h-screen bg-background p-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            Laboratorios
-          </h1>
-          <p className="text-text-light mt-2">
-            Gestión y monitoreo de laboratorios
+    <div className="min-h-screen bg-grid-pattern py-16">
+      <div className="container">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h1 className="section-title">Laboratorios Virtuales</h1>
+          <p className="text-text-secondary max-w-2xl mx-auto">
+            Accede a nuestros laboratorios especializados para realizar pruebas y experimentos en un entorno seguro y controlado.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
           {laboratories.map((lab) => (
-            <div
+            <motion.div
               key={lab.id}
-              className="bg-surface rounded-2xl shadow-card hover:shadow-hover transition-all duration-300 overflow-hidden"
+              variants={itemVariants}
+              className="cyber-card p-6"
             >
-              <div className="p-6">
-                <div className="flex items-start justify-between mb-4">
-                  <div>
-                    <h2 className="text-xl font-semibold text-text">{lab.name}</h2>
-                    <p className="text-text-muted">Lab {lab.id}</p>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-xl font-bold font-orbitron gradient-text">
+                  {lab.name}
+                </h3>
+                <span className={`text-sm font-medium ${getStatusColor(lab.status)}`}>
+                  {lab.status.toUpperCase()}
+                </span>
+              </div>
+
+              <p className="text-text-secondary mb-6">
+                {lab.description}
+              </p>
+
+              <div className="space-y-4 mb-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <FiUsers className="text-primary" />
+                    <span className="text-text-secondary">Usuarios</span>
                   </div>
-                  <span
-                    className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(
-                      lab.status
-                    )}`}
-                  >
-                    {getStatusText(lab.status)}
+                  <span className="text-text-primary">
+                    {lab.users}/{lab.maxUsers}
                   </span>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 mb-6">
-                  <div className="flex items-center space-x-3">
-                    <div className="p-2 rounded-lg bg-surface-light">
-                      <FiUsers className="w-5 h-5 text-primary" />
-                    </div>
-                    <div>
-                      <p className="text-sm text-text-muted">Capacidad</p>
-                      <p className="text-text font-medium">{lab.capacity} personas</p>
-                    </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <FiCpu className="text-primary" />
+                    <span className="text-text-secondary">CPU</span>
                   </div>
-
-                  {lab.status === 'in-use' && (
-                    <div className="flex items-center space-x-3">
-                      <div className="p-2 rounded-lg bg-surface-light">
-                        <FiUsers className="w-5 h-5 text-secondary" />
-                      </div>
-                      <div>
-                        <p className="text-sm text-text-muted">Ocupación</p>
-                        <p className="text-text font-medium">{lab.currentUsers} personas</p>
-                      </div>
-                    </div>
-                  )}
-
-                  {lab.status === 'available' && lab.nextReservation && (
-                    <div className="flex items-center space-x-3">
-                      <div className="p-2 rounded-lg bg-surface-light">
-                        <FiClock className="w-5 h-5 text-accent" />
-                      </div>
-                      <div>
-                        <p className="text-sm text-text-muted">Próxima reserva</p>
-                        <p className="text-text font-medium">{lab.nextReservation}</p>
-                      </div>
-                    </div>
-                  )}
+                  <div className="w-32 bg-background-light/50 rounded-full h-2">
+                    <div
+                      className="bg-primary h-2 rounded-full"
+                      style={{ width: `${lab.cpuUsage}%` }}
+                    />
+                  </div>
                 </div>
 
-                <div>
-                  <h3 className="text-sm font-medium text-text-light mb-2">Equipamiento</h3>
-                  <div className="space-y-2">
-                    {lab.equipment.map((item, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center space-x-2 text-text-muted"
-                      >
-                        <FiActivity className="w-4 h-4" />
-                        <span>{item}</span>
-                      </div>
-                    ))}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <FiActivity className="text-primary" />
+                    <span className="text-text-secondary">Memoria</span>
                   </div>
+                  <div className="w-32 bg-background-light/50 rounded-full h-2">
+                    <div
+                      className="bg-primary h-2 rounded-full"
+                      style={{ width: `${lab.memoryUsage}%` }}
+                    />
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <FiShield className="text-primary" />
+                    <span className="text-text-secondary">Seguridad</span>
+                  </div>
+                  <span className={`text-sm font-medium ${getSecurityLevelColor(lab.securityLevel)}`}>
+                    {lab.securityLevel.toUpperCase()}
+                  </span>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <FiClock className="text-primary" />
+                    <span className="text-text-secondary">Última actividad</span>
+                  </div>
+                  <span className="text-text-secondary text-sm">
+                    {new Date(lab.lastActivity).toLocaleTimeString()}
+                  </span>
                 </div>
               </div>
 
-              <div className="border-t border-surface-light p-4">
-                <div className="flex space-x-2">
-                  <button className="flex-1 bg-primary hover:bg-primary-dark text-white py-2 px-4 rounded-lg font-medium transition-colors duration-300">
-                    Reservar
-                  </button>
-                  <button className="flex-1 bg-surface-light hover:bg-surface-light/80 text-text py-2 px-4 rounded-lg font-medium transition-colors duration-300">
-                    Ver Detalles
-                  </button>
-                </div>
-              </div>
-            </div>
+              <Link
+                to={`/laboratories/${lab.id}`}
+                className="cyber-button-accent w-full text-center block"
+              >
+                Acceder al Laboratorio
+              </Link>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </div>
   );
