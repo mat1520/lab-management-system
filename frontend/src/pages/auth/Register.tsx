@@ -96,7 +96,7 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden flex items-center justify-center bg-gradient-to-b from-indigo-50 to-white">
+    <div className="min-h-screen relative overflow-hidden flex items-center justify-center bg-gradient-to-b from-background to-surface">
       {/* Círculos decorativos con animación */}
       <div className="accent-circle top-[-150px] left-[-150px]" />
       <div className="accent-circle bottom-[-150px] right-[-150px]" />
@@ -109,7 +109,7 @@ const Register: React.FC = () => {
             <h2 className="text-3xl font-bold mb-2">
               <span className="text-gradient">Crear cuenta</span>
             </h2>
-            <p className="text-gray-600">Únete a nuestra plataforma de gestión de laboratorios</p>
+            <p className="text-text-secondary">Únete a nuestra plataforma de gestión de laboratorios</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
