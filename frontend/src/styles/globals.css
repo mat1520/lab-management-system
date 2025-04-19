@@ -4,15 +4,50 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background-color: var(--background);
-  color: var(--text-primary);
-  font-family: 'Inter', sans-serif;
-  background-image: 
-    linear-gradient(to bottom, rgba(255, 0, 68, 0.1) 1px, transparent 1px),
-    linear-gradient(to right, rgba(255, 0, 68, 0.1) 1px, transparent 1px);
-  background-size: 50px 50px;
-  background-attachment: fixed;
+@layer base {
+  :root {
+    --background: #0A0F2C;
+    --surface: #121830;
+    --surface-light: #1A2140;
+    --primary: #1E90FF;
+    --primary-dark: #1570CC;
+    --primary-light: #47A6FF;
+    --text-primary: #FFFFFF;
+    --text-secondary: #AAB4CF;
+  }
+
+  body {
+    @apply bg-background text-text-primary;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-surface rounded-lg border border-primary/20 shadow-lg hover:shadow-xl transition-all duration-300;
+  }
+
+  .nav-link {
+    @apply text-text-secondary hover:text-text-primary transition-colors duration-300;
+  }
+
+  .container {
+    @apply max-w-7xl mx-auto px-4;
+  }
+}
+
+/* Animaciones básicas */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-in-out;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -20,21 +55,6 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-primary);
   text-shadow: var(--glow-text);
   letter-spacing: 0.05em;
-}
-
-.card {
-  background: var(--glass-background);
-  border: var(--glass-border);
-  box-shadow: var(--glass-shadow);
-  backdrop-filter: blur(12px);
-  border-radius: 1rem;
-  padding: 1.5rem;
-  transition: all 0.3s ease;
-}
-
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg), var(--glow-primary);
 }
 
 .button {
