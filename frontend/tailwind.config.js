@@ -35,11 +35,11 @@ module.exports = {
           800: '#1e293b',
           900: '#0f172a',
         },
-        background: '#f3f4f6',
-        surface: '#ffffff',
+        background: '#0f172a',
+        surface: '#1e293b',
         text: {
-          DEFAULT: '#1f2937',
-          light: '#6b7280',
+          DEFAULT: '#f8fafc',
+          light: '#cbd5e1',
         },
         success: {
           50: '#f0fdf4',
