@@ -11,8 +11,8 @@ import { ThemeProvider } from './contexts/ThemeContext';
 const App: React.FC = () => {
   return (
     <ThemeProvider>
-      <Layout>
-        <Routes>
+      <Routes>
+        <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -24,8 +24,8 @@ const App: React.FC = () => {
               </PrivateRoute>
             }
           />
-        </Routes>
-      </Layout>
+        </Route>
+      </Routes>
     </ThemeProvider>
   );
 };
