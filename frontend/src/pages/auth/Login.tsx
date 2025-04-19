@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../../store/slices/authSlice';
-import { RootState } from '../../store';
+import { RootState, AppDispatch } from '../../store';
 import styles from './Auth.module.css';
 
 const Login: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { isAuthenticated, loading, error } = useSelector((state: RootState) => state.auth);
 
@@ -31,10 +31,8 @@ const Login: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const result = await dispatch(login(formData)).unwrap();
-      if (result) {
-        navigate('/dashboard');
-      }
+      await dispatch(login(formData)).unwrap();
+      navigate('/dashboard');
     } catch (err) {
       // El error ya está manejado en el slice
       console.error('Error al iniciar sesión:', err);
