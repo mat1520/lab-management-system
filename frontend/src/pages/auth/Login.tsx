@@ -8,7 +8,7 @@ import styles from './Auth.module.css';
 const Login: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { isAuthenticated, loading, error } = useSelector((state: RootState) => state.auth);
+  const { isAuthenticated, loading, error, user } = useSelector((state: RootState) => state.auth);
 
   const [formData, setFormData] = useState({
     email: '',
@@ -34,7 +34,6 @@ const Login: React.FC = () => {
       await dispatch(login(formData)).unwrap();
       navigate('/dashboard');
     } catch (err) {
-      // El error ya está manejado en el slice
       console.error('Error al iniciar sesión:', err);
     }
   };
@@ -45,7 +44,7 @@ const Login: React.FC = () => {
       <div className={styles.circle2}></div>
       
       <div className={styles.glassContainer}>
-        <h2>Iniciar Sesión</h2>
+        <h1>Iniciar Sesión</h1>
         
         {error && <div className={styles.error}>{error}</div>}
         
@@ -60,6 +59,7 @@ const Login: React.FC = () => {
               onChange={handleChange}
               required
               placeholder="ejemplo@correo.com"
+              className={styles.input}
             />
           </div>
 
@@ -73,17 +73,46 @@ const Login: React.FC = () => {
               onChange={handleChange}
               required
               placeholder="********"
+              className={styles.input}
             />
           </div>
 
           <button 
             type="submit" 
-            className={styles.submitButton}
+            className={`${styles.submitButton} ${loading ? styles.loading : ''}`}
             disabled={loading}
           >
-            {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
+            {loading ? (
+              <>
+                <span className={styles.spinner}></span>
+                Iniciando sesión...
+              </>
+            ) : (
+              'Iniciar Sesión'
+            )}
           </button>
         </form>
+
+        <div className={styles.infoContainer}>
+          <h3>Credenciales de Prueba:</h3>
+          <div className={styles.credentialsGrid}>
+            <div className={styles.credentialCard}>
+              <h4>Administrador</h4>
+              <p>Email: admin@example.com</p>
+              <p>Contraseña: admin123</p>
+            </div>
+            <div className={styles.credentialCard}>
+              <h4>Estudiante (Ing. Sistemas)</h4>
+              <p>Email: juan@estudiante.com</p>
+              <p>Contraseña: estudiante123</p>
+            </div>
+            <div className={styles.credentialCard}>
+              <h4>Estudiante (Ing. Industrial)</h4>
+              <p>Email: maria@estudiante.com</p>
+              <p>Contraseña: estudiante123</p>
+            </div>
+          </div>
+        </div>
 
         <p className={styles.switchText}>
           ¿No tienes una cuenta? <Link to="/register">Regístrate aquí</Link>
