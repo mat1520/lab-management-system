@@ -1,20 +1,9 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FiShield, FiLock, FiUsers, FiActivity, FiCode, FiServer } from 'react-icons/fi';
-import { Particles } from "@tsparticles/react";
-import { type Container, type Engine } from "@tsparticles/engine";
-import { loadSlim } from "@tsparticles/slim";
 
 const Home: React.FC = () => {
-  const particlesInit = useCallback(async (engine: Engine) => {
-    await loadSlim(engine);
-  }, []);
-
-  const particlesLoaded = useCallback(async (container: Container | undefined) => {
-    console.log(container);
-  }, []);
-
   const titleRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
@@ -26,46 +15,6 @@ const Home: React.FC = () => {
 
   return (
     <div className="relative min-h-screen bg-background overflow-hidden">
-      {/* Particles Background */}
-      <Particles
-        id="tsparticles"
-        init={particlesInit}
-        loaded={particlesLoaded}
-        options={{
-          background: {
-            color: {
-              value: "transparent",
-            },
-          },
-          particles: {
-            color: {
-              value: "#ff003c",
-            },
-            links: {
-              color: "#ff003c",
-              distance: 150,
-              enable: true,
-              opacity: 0.2,
-              width: 1,
-            },
-            move: {
-              enable: true,
-              speed: 1,
-            },
-            number: {
-              value: 50,
-            },
-            opacity: {
-              value: 0.2,
-            },
-            size: {
-              value: { min: 1, max: 3 },
-            },
-          },
-        }}
-        className="absolute inset-0 -z-10"
-      />
-
       {/* Gradient Overlays */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background/50 to-background -z-10"></div>
       <div className="absolute top-0 left-0 w-full h-full bg-grid-pattern opacity-10 -z-10"></div>
