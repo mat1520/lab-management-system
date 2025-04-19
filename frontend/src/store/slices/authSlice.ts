@@ -59,9 +59,9 @@ const mockLogin = async (credentials: LoginCredentials): Promise<AuthResponse> =
   throw new Error('Credenciales inválidas');
 };
 
-export const login = createAsyncThunk(
+export const login = createAsyncThunk<AuthResponse, LoginCredentials, { rejectValue: string }>(
   'auth/login',
-  async (credentials: LoginCredentials) => {
+  async (credentials: LoginCredentials, { rejectWithValue }) => {
     try {
       // En desarrollo usamos el mock, en producción usaríamos la API real
       const data = await mockLogin(credentials);
@@ -69,14 +69,14 @@ export const login = createAsyncThunk(
       return data;
     } catch (error) {
       localStorage.removeItem('token');
-      throw error;
+      return rejectWithValue(error instanceof Error ? error.message : 'Error al iniciar sesión');
     }
   }
 );
 
-export const register = createAsyncThunk(
+export const register = createAsyncThunk<AuthResponse, RegisterData, { rejectValue: string }>(
   'auth/register',
-  async (userData: RegisterData) => {
+  async (userData: RegisterData, { rejectWithValue }) => {
     try {
       // Simulación de registro exitoso
       const data: AuthResponse = {
@@ -92,7 +92,7 @@ export const register = createAsyncThunk(
       return data;
     } catch (error) {
       localStorage.removeItem('token');
-      throw error;
+      return rejectWithValue(error instanceof Error ? error.message : 'Error al registrar usuario');
     }
   }
 );
@@ -105,48 +105,45 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
+      state.error = null;
       localStorage.removeItem('token');
     },
-    updateUser: (state, action: PayloadAction<User>) => {
-      state.user = action.payload;
-    },
+    clearError: (state) => {
+      state.error = null;
+    }
   },
   extraReducers: (builder) => {
     builder
-      .addCase(register.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(register.fulfilled, (state, action) => {
-        state.loading = false;
-        state.isAuthenticated = true;
-        state.user = action.payload.user;
-        state.token = action.payload.token;
-        state.error = null;
-      })
-      .addCase(register.rejected, (state, action) => {
-        state.loading = false;
-        state.isAuthenticated = false;
-        state.error = action.error.message || 'Error en el registro';
-      })
       .addCase(login.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(login.fulfilled, (state, action) => {
+      .addCase(login.fulfilled, (state, action: PayloadAction<AuthResponse>) => {
         state.loading = false;
         state.isAuthenticated = true;
         state.user = action.payload.user;
         state.token = action.payload.token;
-        state.error = null;
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
-        state.isAuthenticated = false;
-        state.error = action.error.message || 'Error en el inicio de sesión';
+        state.error = action.payload || 'Error al iniciar sesión';
+      })
+      .addCase(register.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(register.fulfilled, (state, action: PayloadAction<AuthResponse>) => {
+        state.loading = false;
+        state.isAuthenticated = true;
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || 'Error al registrar usuario';
       });
-  },
+  }
 });
 
-export const { logout, updateUser } = authSlice.actions;
+export const { logout, clearError } = authSlice.actions;
 export default authSlice.reducer; 

@@ -31,8 +31,12 @@ const Login: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await dispatch(login(formData)).unwrap();
+      const result = await dispatch(login(formData)).unwrap();
+      if (result) {
+        navigate('/dashboard');
+      }
     } catch (err) {
+      // El error ya está manejado en el slice
       console.error('Error al iniciar sesión:', err);
     }
   };
