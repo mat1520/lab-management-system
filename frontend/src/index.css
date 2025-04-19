@@ -8,7 +8,7 @@
   }
   
   body {
-    @apply bg-background text-text;
+    @apply bg-background text-text-primary;
   }
 }
 
@@ -38,7 +38,7 @@
   }
   
   .input {
-    @apply block w-full rounded-md border-gray-700 bg-surface text-text shadow-sm focus:border-primary focus:ring-primary sm:text-sm;
+    @apply block w-full rounded-md border-gray-700 bg-surface text-text-primary shadow-sm focus:border-primary focus:ring-primary sm:text-sm;
   }
   
   .card {
