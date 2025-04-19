@@ -5,6 +5,9 @@ interface User {
   name: string;
   email: string;
   role: string;
+  studentId?: string;
+  department?: string;
+  semester?: number;
 }
 
 interface AuthState {
@@ -39,20 +42,59 @@ const initialState: AuthState = {
   error: null,
 };
 
+// Base de datos simulada de usuarios
+const mockUsers = [
+  {
+    id: '1',
+    name: 'Administrador',
+    email: 'admin@example.com',
+    password: 'admin123',
+    role: 'admin'
+  },
+  {
+    id: '2',
+    name: 'Juan Pérez',
+    email: 'juan@estudiante.com',
+    password: 'estudiante123',
+    role: 'student',
+    studentId: '2020-0001',
+    department: 'Ingeniería de Sistemas',
+    semester: 6
+  },
+  {
+    id: '3',
+    name: 'María García',
+    email: 'maria@estudiante.com',
+    password: 'estudiante123',
+    role: 'student',
+    studentId: '2020-0002',
+    department: 'Ingeniería Industrial',
+    semester: 4
+  },
+  {
+    id: '4',
+    name: 'Carlos López',
+    email: 'carlos@estudiante.com',
+    password: 'estudiante123',
+    role: 'student',
+    studentId: '2020-0003',
+    department: 'Ingeniería Civil',
+    semester: 8
+  }
+];
+
 // Simulación de API para desarrollo
 const mockLogin = async (credentials: LoginCredentials): Promise<AuthResponse> => {
   // Simular delay de red
   await new Promise(resolve => setTimeout(resolve, 500));
   
-  if (credentials.email === 'admin@example.com' && credentials.password === 'admin123') {
+  const user = mockUsers.find(u => u.email === credentials.email && u.password === credentials.password);
+  
+  if (user) {
+    const { password, ...userWithoutPassword } = user;
     return {
-      user: {
-        id: '1',
-        name: 'Administrador',
-        email: 'admin@example.com',
-        role: 'admin'
-      },
-      token: 'mock-jwt-token'
+      user: userWithoutPassword,
+      token: `mock-jwt-token-${user.id}`
     };
   }
   
