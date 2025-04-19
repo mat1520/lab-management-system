@@ -5,28 +5,28 @@ import { FiShield, FiLock, FiUsers, FiActivity, FiCode, FiServer } from 'react-i
 
 const Home: React.FC = () => {
   return (
-    <div className="page-container">
+    <div className="page-container flex flex-col min-h-screen">
       {/* Elementos de acento con más brillo y animación */}
-      <div className="accent-circle animate-pulse-glow" style={{ top: '-5%', left: '-5%', width: '500px', height: '500px', opacity: 0.15 }}></div>
-      <div className="accent-circle animate-pulse-glow" style={{ bottom: '-5%', right: '-5%', width: '500px', height: '500px', opacity: 0.15 }}></div>
-      <div className="accent-grid"></div>
+      <div className="fixed top-0 left-0 w-[500px] h-[500px] accent-circle animate-pulse-glow" style={{ opacity: 0.15 }}></div>
+      <div className="fixed bottom-0 right-0 w-[500px] h-[500px] accent-circle animate-pulse-glow" style={{ opacity: 0.15 }}></div>
+      <div className="fixed inset-0 accent-grid"></div>
       
-      {/* Hero Section Mejorado */}
-      <section className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-4 md:px-8 py-20">
+      {/* Hero Section Mejorado - Ahora centrado verticalmente */}
+      <section className="flex-1 relative z-10 flex flex-col items-center justify-center px-4 md:px-8">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="mb-8"
+          className="text-center max-w-6xl mx-auto"
         >
-          <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-6 bg-gradient-to-r from-blue-500 via-primary to-purple-500 text-transparent bg-clip-text animate-gradient">
+          <h1 className="text-7xl md:text-8xl lg:text-9xl font-bold mb-8 bg-gradient-to-r from-blue-500 via-primary to-purple-500 text-transparent bg-clip-text animate-gradient">
             LabSec
           </h1>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-text-primary"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-text-primary leading-tight"
           >
             Sistema de Gestión de Laboratorios de Ciberseguridad
           </motion.h2>
@@ -36,7 +36,7 @@ const Home: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.8 }}
-          className="max-w-3xl mb-12 text-xl md:text-2xl text-text-secondary leading-relaxed"
+          className="max-w-3xl text-xl md:text-2xl text-text-secondary leading-relaxed text-center mb-12"
         >
           Plataforma integral para la gestión, monitoreo y seguridad de laboratorios especializados en ciberseguridad.
         </motion.p>
@@ -47,17 +47,23 @@ const Home: React.FC = () => {
           transition={{ delay: 0.7, duration: 0.8 }}
           className="flex flex-col sm:flex-row gap-6"
         >
-          <Link to="/auth/login" className="btn-primary-glow text-lg px-8 py-4">
+          <Link 
+            to="/auth/login" 
+            className="btn-cyber-primary text-lg px-12 py-5 min-w-[200px] text-center"
+          >
             Iniciar Sesión
           </Link>
-          <Link to="/auth/register" className="btn-secondary-glow text-lg px-8 py-4">
+          <Link 
+            to="/auth/register" 
+            className="btn-cyber-secondary text-lg px-12 py-5 min-w-[200px] text-center"
+          >
             Registrarse
           </Link>
         </motion.div>
       </section>
       
       {/* Features Section con animaciones mejoradas */}
-      <section className="relative z-10 py-20 px-4 md:px-8">
+      <section className="relative z-10 py-20 px-4 md:px-8 bg-surface/30 backdrop-blur-lg mt-20">
         <div className="max-w-7xl mx-auto">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -91,42 +97,6 @@ const Home: React.FC = () => {
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
-      
-      {/* CTA Section */}
-      <section className="relative z-10 py-16 px-4 md:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="mb-6"
-          >
-            ¿Listo para mejorar la seguridad de tu laboratorio?
-          </motion.h2>
-          
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="mb-8 text-lg"
-          >
-            Únete a nuestra plataforma y comienza a gestionar tus laboratorios de ciberseguridad de manera eficiente y segura.
-          </motion.p>
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            viewport={{ once: true }}
-          >
-            <Link to="/auth/register" className="btn-primary">
-              Comenzar Ahora
-            </Link>
-          </motion.div>
         </div>
       </section>
     </div>
